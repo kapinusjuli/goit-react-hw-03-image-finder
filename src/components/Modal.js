@@ -1,27 +1,39 @@
-// skip the JS file and use basicLightbox as a module:
+import { createPortal } from "react-dom";
+import { Component } from "react";
 
-// const basicLightbox = require('basiclightbox')
-// import * as basicLightbox from 'basiclightbox''
+const modalRoot = document.querySelector("#modal-root");
 
-// https://github.com/electerious/basicLightbox#requirements
+class Modal extends Component {
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
 
-//_____пример
-import * as basicLightbox from "basiclightbox";
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  }
 
-const instance = basicLightbox.create(`
-    <div class="modal">
-        <p>
-            Your first lightbox with just a few lines of code.
-            Yes, it's really that simple.
-        </p>
-    </div>
-`);
+  handleKeyDown = (e) => {
+    if (e.code === "Escape") {
+      this.props.onClose();
+    }
+  };
 
-instance.show();
+  handleOverlayClick = (event) => {
+    if (event.currentTarget === event.target) {
+      this.props.onClose();
+    }
+  };
+  render() {
+    const { src, alt } = this.props;
 
-//------------задание
-<div class="overlay">
-  <div class="modal">
-    <img src="" alt="" />
-  </div>
-</div>;
+    return createPortal(
+      <div className="Overlay" onClick={this.handleOverlayClick}>
+        <div className="Modal">
+          <img src={src} alt={alt} />
+        </div>
+      </div>,
+      modalRoot
+    );
+  }
+}
+export default Modal;

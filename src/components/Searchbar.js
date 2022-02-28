@@ -1,5 +1,4 @@
 import { Component } from "react";
-// import { toast } from "react-toastify";
 import toast from "react-hot-toast";
 import { FiSearch } from "react-icons/fi";
 import "./styles.css";
@@ -9,7 +8,9 @@ export default class SearchBar extends Component {
     searchQuery: "",
   };
   handleNameChange = (event) => {
-    this.setState({ searchQuery: event.currentTarget.value.toLowerCase() });
+    this.setState({
+      searchQuery: event.currentTarget.value.toLowerCase(),
+    });
   };
 
   handleSubmit = (event) => {
@@ -17,7 +18,7 @@ export default class SearchBar extends Component {
     if (this.state.searchQuery.trim() === "") {
       return toast.error("введите запрос");
     }
-    this.props.onSubmit(this.state.searchQuery);
+    this.props.onSearch(this.state.searchQuery);
     this.setState({ searchQuery: "" });
   };
 
@@ -36,9 +37,9 @@ export default class SearchBar extends Component {
             autoFocus
             placeholder="Search images and photos"
             name="searchQuery"
-            value={this.state.searchQuery}
             onChange={this.handleNameChange}
           />
+          <p>value={this.props.searchQuery}</p>
         </form>
       </header>
     );
