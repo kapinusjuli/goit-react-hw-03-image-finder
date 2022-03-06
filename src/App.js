@@ -16,9 +16,10 @@ export default class App extends Component {
     items: [],
     isLoading: false,
     showModal: false,
+    newPage: false,
   };
 
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.setState({ status: "pending" });
       this.fetchImages();
@@ -55,6 +56,7 @@ export default class App extends Component {
       this.setState((prevState) => ({
         items: [...prevState.items, ...data],
         status: "resolved",
+        newPage: [...prevState.items, ...data] !== this.state.items,
       }));
     } catch (error) {
       this.setState({ status: "rejected" });
@@ -66,7 +68,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { items, status, error, showModal } = this.state;
+    const { items, status, error, showModal, newPage } = this.state;
 
     <SearchBar onSearch={this.onSearch} />;
     if (status === "idle") {
@@ -84,8 +86,8 @@ export default class App extends Component {
           <SearchBar onSearch={this.onSearch} />
           <ImageGallery items={items} onClose={showModal} />
           <Toaster />
-
-          <Button onHandleClick={this.loadMore} />
+          {newPage && <Button onHandleClick={this.loadMore} />}
+          {/* <Button onHandleClick={this.loadMore} /> */}
         </div>
       );
     }

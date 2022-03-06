@@ -1,6 +1,6 @@
 import "../components/styles.css";
 import ImageGalleryItem from "./ImageGalleryItem";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 export const ImageGallery = ({ items }) => {
   return (
@@ -21,10 +21,10 @@ export const ImageGallery = ({ items }) => {
 
 export default ImageGallery;
 
-ImageGallery.propTypes = {
-  key: PropTypes.number.isRequired,
-  item: PropTypes.object.isRequired,
-};
+// ImageGallery.propTypes = {
+//   key: PropTypes.number.isRequired,
+//   item: PropTypes.object.isRequired,
+// };
 
 // idle
 // pending
