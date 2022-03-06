@@ -16,7 +16,7 @@ export default class App extends Component {
     items: [],
     isLoading: false,
     showModal: false,
-    newPage: false,
+    newPage: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -56,7 +56,7 @@ export default class App extends Component {
       this.setState((prevState) => ({
         items: [...prevState.items, ...data],
         status: "resolved",
-        newPage: [...prevState.items, ...data] !== this.state.items,
+        newPage: data.length,
       }));
     } catch (error) {
       this.setState({ status: "rejected" });
@@ -86,7 +86,7 @@ export default class App extends Component {
           <SearchBar onSearch={this.onSearch} />
           <ImageGallery items={items} onClose={showModal} />
           <Toaster />
-          {newPage && <Button onHandleClick={this.loadMore} />}
+          {newPage === 12 && <Button onHandleClick={this.loadMore} />}
           {/* <Button onHandleClick={this.loadMore} /> */}
         </div>
       );
