@@ -67,6 +67,12 @@ export default class App extends Component {
     this.setState((prevState) => ({ page: prevState.page + 1 }));
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
     const { items, status, error, showModal, newPage } = this.state;
 
@@ -84,7 +90,7 @@ export default class App extends Component {
       return (
         <div>
           <SearchBar onSearch={this.onSearch} />
-          <ImageGallery items={items} onClose={showModal} />
+          <ImageGallery items={items} onClose={this.toggleModal} />
           <Toaster />
           {newPage === 12 && <Button onHandleClick={this.loadMore} />}
           {/* <Button onHandleClick={this.loadMore} /> */}
